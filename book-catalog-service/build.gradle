@@ -32,6 +32,16 @@ dependencyManagement {
 	}
 }
 
+task fatJar(type: Jar) {
+	manifest {
+		attributes 'Implementation-Title': 'Gradle Jar File Example',
+				'Main-Class': 'io.library.bookcatalogservice.BookCatalogServiceApplication'
+	}
+	baseName = project.name + '-all'
+	from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
+	with jar
+}
+
 test {
 	useJUnitPlatform()
 }
